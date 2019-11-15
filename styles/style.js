@@ -22,7 +22,8 @@ export const styles = StyleSheet.create({
   result: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#D5D8DC'
+    backgroundColor: '#D5D8DC',
+    alignItems: 'flex-end',
   },
   btnstl: {
     flex: 1,

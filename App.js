@@ -8,48 +8,58 @@ export default class Calculator extends Component {
   constructor() {
     super()
     this.state = {
-      resText: ""
+      text: "",
+      resText:""
     }
+    this.operation = ['C', '+', '-', '*', '/']
+  }
+  
+
+  calculateResult(){
+    const text = this.state.text
+    
+    console.log(text, eval(text))
+    this.setState({
+      resText: eval(text)
+    })
+
   }
   numClicked(text) {
     console.log("pressed btn is " + text)
-    if (text == '=') {
-
+    if (text == '=') { 
+        return this.calculateResult()
     }
-    this.setState(
-      {
-        resText: this.state.resText + text
-      }
-    )
+    this.setState({ text: this.state.text + text })
   }
   opClicked(operation) {
-    console.log("pressed btn is " + text)
     switch (operation) {
       case 'C':
-        let secondNum = this.state.resText - text
+        let text = this.state.text.split('')
+        text.pop()
+        this.setState({ text: text.join('') })
         break
       case '+':
-        break
       case '-':
-        break
       case '*':
-        break
       case '/':
-        break
+        const last = this.state.text.split('').pop()
+        if (this.operation.indexOf(last) > 0) return
+        if (this.state.text == "") return
+        this.setState({
+          text: this.state.text + operation
+        })
+      //console.log("This is Result text" + text)
     }
 
   }
   render() {
-
-    let operation = ['C', '+', '-', '*', '/']
     let ops = []
     for (let i = 0; i < 5; i++) {
       ops.push(
-        <TouchableOpacity style={styles.btnstl} onPress={() => this.opClicked(operation[i])}>
-          <Text style={styles.optxt}>{operation[i]}</Text>
+        <TouchableOpacity style={styles.btnstl} onPress={() => this.opClicked(this.operation[i])}>
+          <Text style={styles.optxt}>{this.operation[i]}</Text>
         </TouchableOpacity>)
     }
-
     let rows = []
     let nums = [[7, 8, 9], [4, 5, 6], [1, 2, 3], ['.', 0, '=']]
     for (let i = 0; i < 4; i++) {
@@ -65,10 +75,10 @@ export default class Calculator extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.number}>
-          <Text style={styles.numberText}>{this.state.resText}</Text>
+          <Text style={styles.numberText}>{this.state.text}</Text>
         </View>
         <View style={styles.result}>
-          <Text style={styles.resultText}>Some Text</Text>
+          <Text style={styles.resultText}>{this.state.resText}</Text>
         </View>
         <View style={styles.buttons}>
           <View style={styles.numbers}>
