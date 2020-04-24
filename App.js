@@ -9,15 +9,14 @@ export default class Calculator extends Component {
     super()
     this.state = {
       text: "",
-      resText:""
+      resText: ""
     }
     this.operation = ['C', '+', '-', '*', '/']
   }
-  
 
-  calculateResult(){
+
+  calculateResult() {
     const text = this.state.text
-    
     console.log(text, eval(text))
     this.setState({
       resText: eval(text)
@@ -26,8 +25,8 @@ export default class Calculator extends Component {
   }
   numClicked(text) {
     console.log("pressed btn is " + text)
-    if (text == '=') { 
-        return this.calculateResult()
+    if (text == '=') {
+      return this.calculateResult()
     }
     this.setState({ text: this.state.text + text })
   }
@@ -48,7 +47,6 @@ export default class Calculator extends Component {
         this.setState({
           text: this.state.text + operation
         })
-      //console.log("This is Result text" + text)
     }
 
   }
@@ -57,7 +55,7 @@ export default class Calculator extends Component {
     for (let i = 0; i < 5; i++) {
       ops.push(
         <TouchableOpacity style={styles.btnstl} onPress={() => this.opClicked(this.operation[i])}>
-          <Text style={styles.optxt}>{this.operation[i]}</Text>
+          <Text style={styles.optxt} >{this.operation[i]}</Text>
         </TouchableOpacity>)
     }
     let rows = []
@@ -66,7 +64,10 @@ export default class Calculator extends Component {
       let row = []
       for (let j = 0; j < 3; j++) {
         row.push(
-          <TouchableOpacity style={styles.btnstl} onPress={() => this.numClicked(nums[i][j])}>
+          <TouchableOpacity testID={JSON.stringify(nums[i][j])} style={styles.btnstl}
+            onPress={
+              () => this.numClicked(nums[i][j])
+            }>
             <Text style={[styles.btntxt]}>{nums[i][j]}</Text>
           </TouchableOpacity>)
       }
@@ -75,10 +76,10 @@ export default class Calculator extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.number}>
-          <Text style={styles.numberText}>{this.state.text}</Text>
+          <Text testID={'text'} style={styles.numberText}>{this.state.text}</Text>
         </View>
         <View style={styles.result}>
-          <Text style={styles.resultText}>{this.state.resText}</Text>
+          <Text testID={'result'} style={styles.resultText}>{this.state.resText}</Text>
         </View>
         <View style={styles.buttons}>
           <View style={styles.numbers}>
